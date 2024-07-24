@@ -1,0 +1,14 @@
+{% load static %}
+<!-- Card 4x5 Padrão para todos -->
+<div class="card">
+    <a href="{% url 'detalhe-postagem-forum' post.slug %}">
+        <img class="card-img" src="{% if post.anexar_imagem %}{{post.anexar_imagem.url}}{% else %}{% static 'images/default-image.jpg' %}{% endif %}" alt="{{post.id}}">
+    </a>
+    <div class="card-body">
+        <h4 class="card-header"><a href="{% url 'detalhe-postagem-forum' post.slug %}">{{post.titulo}}</a></h4>
+        <div class="">
+            <p class="card-text">{{ post.usuario.get_full_name }}</p>
+            <small class="post-date">{{ post.data_publicacao }}</small>
+        </div> 
+    </div>
+</div>

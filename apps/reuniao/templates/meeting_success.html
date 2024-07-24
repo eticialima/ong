@@ -1,0 +1,7 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Dashboard - Solicitar Reunião{% endblock %}
+{% block content_dash %} 
+<h1>Sua solicitação de reunião foi enviada com sucesso!</h1>
+<a href="{% url 'request_meeting' %}">Solicitar outra reunião</a>
+ 
+{% endblock %} 

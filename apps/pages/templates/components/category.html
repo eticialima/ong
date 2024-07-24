@@ -1,0 +1,10 @@
+<!-- Componente da Sidebar - Categorias -->
+{% load static %}
+<div class="mt-3">
+    <h2 class="heading">Categorias</h2>
+    <ul>
+        {% for category in categories %}
+        <li><a href="{% url 'search_filters' %}?search={{category.name}}">{{ category.name }} <span>({{ category.post_count }})</span></a></li>
+        {% endfor %}
+    </ul>
+</div> 

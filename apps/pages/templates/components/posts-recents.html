@@ -1,0 +1,25 @@
+<!-- Pagina Home mostra as mensagens mais recentes com sidebar -->
+{% if bloco.bloco.nome == 'POSTS_RECENTS' %} 
+<div class="container">
+    <h2 class="header my-4">{{bloco.titulo}}</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                {% if bloco.posts.all %}  
+                    {% for post in bloco.posts.all|slice:":9" %}
+                        <div class="col-md-6 mb-4">
+                            {% include "components/post-card.html" %}
+                        </div>
+                    {% endfor %} 
+                    <div class="col-12 text-center">
+                        <a class="btn btn-info mt-3" href="{% url 'lista-postagem-forum' %}">Ver mais no Blog</a> 
+                    </div>
+                {% endif %}
+            </div>
+        </div> 
+        <div class="col-md-4">
+            {% include 'components/sidebar.html' %}
+        </div>
+    </div>
+</div>
+{% endif %}

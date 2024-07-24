@@ -1,57 +1,140 @@
 @import url('global.css');
 
 .sidebar {
-    position: fixed;
-    height: 100%;
-    padding: 10px 15px 0;
-    z-index: 0;
-    width: 250px;
+  position: fixed;
+  height: 100%;
+  padding: 10px 15px 0;
+  z-index: 0;
+  width: 250px;
 }
 
 .sidebar button {
-    height: 60px;
+  height: 60px;
 }
 
 .bloco {
-    margin: 70px 0px 70px 0px;
+  margin: 70px 0px 70px 0px;
 }
 
 .pagination .page-link {
-    background: var(--button-hover);
-    color: var(--main-color);
-    border: none;
-} 
- 
-.banner { 
-    padding: 8em 0;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    position: relative;
-    width: 100%;
-    object-fit: cover ;
+  background: var(--button-hover);
+  color: var(--main-color);
+  border: none;
+}
+
+.banner {
+  padding: 8em 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: relative;
+  width: 100%;
+  object-fit: cover;
 }
 
 @media (min-width: 968px) {
-    .bloco {
-        padding-left: 250px;
-    }
+  .bloco {
+    padding-left: 250px;
+  }
 
-    /* .collapse:not(.show) {
+  /* .collapse:not(.show) {
         display: flex;
     } */
 }
 
 @media (max-width: 968px) {
-    .sidebar {
-        width: 100%;
-    }
+  .sidebar {
+    width: 100%;
+  }
 
-    .navbar-brand {
-        display: none;
-    }
+  .navbar-brand {
+    display: none;
+  }
 
-    footer {
-        display: none;
-    }
+  footer {
+    display: none;
+  }
 }
+
+ 
+
+
+/* --------------------- */
+/*  Componente - CARD_1  */
+/* --------------------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.cards .card {
+  position: relative;
+  width: 100%;
+  color: var(--color-white);
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 5px;
+}
+
+.card-left .card {
+  height: 200px;
+}
+
+.card-right .card {
+  height: 300px;
+}
+
+.card img {
+  width: 100%;
+  height: 250px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+ 
+.card-image-gradient img {
+  height: 100%;
+} 
+
+.card .card-content {
+  position: absolute;
+  z-index: 100;
+  left: 50px;
+  bottom: 50px;
+  right: 50px;
+}
+
+.card .card-description {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 10px;
+}
+ 
+.card a {
+  text-decoration: none;
+  color: var(--color-white);
+}
+
+@media(max-width: 650px) {
+  .cards {
+    margin: 3rem 0;
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    height: auto;
+  }
+
+  .cards .card-left .card,
+  .cards .card-right .card {
+    height: 300px;
+  }
+
+  .card-left .card,
+  .card-right .card {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+}
+ 

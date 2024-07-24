@@ -3,16 +3,29 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator 
+from pages.models import Blocos
 from base.utils import add_form_errors_to_messages,filtrar_modelo
 from forum.forms import PostagemForumComentarioForm, PostagemForumForm
 from django.contrib import messages  
 from forum import models
+ 
+ 
+def search_filters(request):
+    template_name = 'search_filters.html'
+    search = request.GET.get('search', 'Django')
+    posts_term = None
+    if search != '':
+        posts_term = models.PostagemForum.objects.search(query=search) 
+        
+    paginacao = Paginator(posts_term, 12)
+    pagina_numero = request.GET.get("page") # 2 3 4 5 
+    page_obj = paginacao.get_page(pagina_numero)
+    context = {
+        'page_obj': page_obj if search else None,
+        'search': search,
+    }
+    return render(request, template_name, context)
 
-# Lista de Postagens
-# def lista_postagem_forum(request):
-#     postagens = models.PostagemForum.objects.filter(ativo=True)
-#     context = {'postagens': postagens}
-#     return render(request, 'lista-postagem-forum.html', context)
 
 def lista_postagem_forum(request):
     form_dict = {}
@@ -25,9 +38,9 @@ def lista_postagem_forum(request):
         filtros["descricao"] = valor_busca
         
     # Valida Rotas (Forum ou Dashboard)
-    if request.path == '/forum/': # Pagina forum da home, mostrar tudo ativo. 
+    if request.path == '/noticias/': # Pagina forum da home, mostrar tudo ativo. 
         postagens = models.PostagemForum.objects.filter(ativo=True)
-        template_view = 'lista-postagem-forum.html' # lista de post da rota /forum/
+        template_view = 'lista-postagem-forum.html' # lista de post da rota /noticias/
     else: # Essa parte mostra no Dashboard
         user = request.user 
         lista_grupos = ['administrador', 'colaborador']
@@ -51,7 +64,7 @@ def lista_postagem_forum(request):
     form_list = [(postagem, form) for postagem, form in form_dict.items()]
     
     # Aplicar a paginação à lista de tuplas
-    paginacao = Paginator(form_list, 3) # '3' é numero de registro por pagina
+    paginacao = Paginator(form_list, 12) # '3' é numero de registro por pagina
     
     # Obter o número da página a partir dos parâmetros da URL
     pagina_numero = request.GET.get("page") # 2 3 4 5 
@@ -59,8 +72,12 @@ def lista_postagem_forum(request):
     
     # Criar um novo dicionário form_dict com base na página atual
     form_dict = {postagem: form for postagem, form in page_obj} 
-    
-    context = {'page_obj': page_obj, 'form_dict': form_dict}
+
+    context = {'page_obj': page_obj, 
+               'form_dict': form_dict,
+               'blocos': Blocos.objects.filter(
+                   pagina__nome='noticias',ativo=True).order_by('ordem')
+            }
     
     return render(request, template_view, context)
 
@@ -141,7 +158,7 @@ def deletar_postagem_forum(request, slug):
     if request.method == 'POST': 
         postagem.delete() 
         messages.error(request, message)
-        if re.search(r'/forum/detalhe-postagem-forum/([^/]+)/', redirect_route): # se minha rota conter
+        if re.search(r'/noticias/detalhe-postagem-forum/([^/]+)/', redirect_route): # se minha rota conter
             return redirect('lista-postagem-forum')
         return redirect(redirect_route)
     return render(request, 'detalhe-postagem-forum.html', {'postagem': postagem})

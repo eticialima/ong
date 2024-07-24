@@ -1,0 +1,27 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Dashboard - Créditos dos Usuários{% endblock %}
+{% block content_dash %}
+<div class="p-3"> 
+    <h2>Créditos dos Usuários</h2>
+    <!-- table -->
+    <div class="table-responsive">
+        <table class="table table-light">
+            <thead class="table-light">
+                <tr> 
+                    <th scope="col">Usuário</th>
+                    <th scope="col">Crédito</th>
+                </tr>
+            </thead> 
+            {% for credit in page_obj %}
+            <tr>
+                <td>{{ credit.user.username }}</td>
+                <td>{{ credit.balance }}</td>
+            </tr> 
+            {% empty %}
+            <p>Nenhuma poste cadastrado.</p>
+            {% endfor %}
+        </table>
+    </div>
+    {% include 'components/paginacao.html' %}
+</div>
+{% endblock %} 

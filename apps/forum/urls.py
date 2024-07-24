@@ -18,4 +18,6 @@ urlpatterns = [
     path('deletar-comentario/<int:comentario_id>/', views.deletar_comentario, name='deletar-comentario'),
     path('responder-comentario/<int:comentario_id>/', views.responder_comentario, name='responder-comentario'),
 
+    path('filtros/', views.search_filters, name='search_filters'),
+    
 ]

@@ -16,3 +16,6 @@ admin.site.register(models.PostagemForum, PostagemForumAdmin)
 # admin.site.register(models.PostagemForumImagem)
 
 admin.site.register(models.PostagemForumComentario)
+
+admin.site.register(models.Category)
+admin.site.register(models.Tag)

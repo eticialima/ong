@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Resultado do Filtro | {{ block.super|truncatechars:40 }}{% endblock %}
+{% block meta_description_keyword %}
+<meta name="description" content="Filtra: {{search}}" />
+<meta name="keywords" content="Resultado da pesquisa para: {{search}}" />
+{% endblock %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="container-search my-4">
+        <div class="mb-4">
+            <h1 class="display-4">Resultados do Filtro</h1>
+            <h4 class="text-muted">Resultado da pesquisa para: <strong>{{search}}</strong></h4>
+        </div>
+        <div class="search-form mb-3">
+            <form class="form-inline d-flex gap-3" action="{% url 'search_filters' %}" method="GET" role="search">
+                <input class="form-control mr-2" type="search" placeholder="Pesquisar..." name="search" value="{{search}}" id="title">
+                <button type="submit" class="btn btn-outline-primary"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="mb-4">
+            <p>Tags:</p>
+            <ul class="list-inline">
+                {% for category in categories %}
+                <li class="list-inline-item m-1 {% if search == category.name %} active {% endif %}">
+                    <a href="{% url 'search_filters' %}?search={{category.name}}" class="btn btn-sm btn-secondary {% if search == category.name %}btn-primary{% endif %}">
+                        {{ category.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="posts-container">
+        {% if page_obj %}
+        <div class="row">
+            {% for post in page_obj %}
+                <div class="col-md-4 mb-4">
+                    {% include "components/post-card.html" %}
+                </div>
+            {% endfor %}
+        </div>
+        {% include 'components/paginacao.html' %}
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                A busca não encontrou resultado para o termo digitado.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}{% endblock scripts %}

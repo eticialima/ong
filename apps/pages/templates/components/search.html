@@ -1,0 +1,12 @@
+{% load static %}
+<!-- SEARCH -->
+<!-- Componente de Pesquisar -->
+{% if bloco.bloco.nome == 'SEARCH' %}  
+<div class="container p-3 bg-light"> 
+    <h2 class="header">{{b.title}}</h2>  
+    <form action="{% url 'search_filters' %}" method="GET" role="search" class="form-search d-flex gap-3">   
+        <input type="text" class="form-control" name="search" placeholder="Pesquisar...">
+        <button class="btn btn-warning" type="submit"><i class="fas fa-search"></i></button>   
+    </form>  
+</div>  
+{% endif %}

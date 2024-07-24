@@ -16,6 +16,7 @@
                 <i class="link-light fas fa-align-left fa-2x me-3"></i> 
             </a>
             <div class="navbar-nav ms-auto d-flex flex-row">
+                <button class="btn btn-success">Total de Creditos: {{ credit_user.balance }}</button>
                 <a class="link-light p-2" href="{% url 'perfil' user.username %}">
                     <i class="fas fa-user mx-2"></i>{{user.first_name}} {{user.last_name}}
                 </a>
@@ -30,17 +31,42 @@
             <button type="button" class="btn btn-warning active" aria-current="true" onclick="location.href='{% url 'home' %}'">
 								<i class="fas fa-arrow-left me-2"></i>Site</button>
 
-            <button type="button" class="btn btn-light" aria-current="true" 
-                onclick="location.href='{% url 'painel' %}'">
-                <i class="fas fa-tachometer-alt me-2"></i>Painel</button>
-
-            <button type="button" class="btn btn-light" onclick="location.href='{% url 'relatorio' %}'">
-                    <i class="fas fa-file-alt me-2"></i>Relatórios</button>
-
-            {% if perms.contas.view_myuser %}
-            <button type="button" class="btn btn-light" onclick="location.href='{% url 'lista_usuarios' %}'">
-                            <i class="fas fa-users me-2"></i>Usuários do Sistema</button>
+            <button type="button" class="btn btn-info" aria-current="true" onclick="location.href='{% url 'item_list' %}'">
+                <i class="fas fa-tachometer-alt me-2"></i>Painel
+            </button>
+            
+            <button type="button" class="btn btn-light" onclick="location.href='{% url 'user_purchases' %}'">
+                <i class="fas fa-file-alt me-2"></i>Itens Comprados
+            </button>
+            
+            <button type="button" class="btn btn-light" onclick="location.href='{% url 'painel' %}'">
+                <i class="fas fa-gift me-2"></i>Benefícios
+            </button>
+            
+            <button type="button" class="btn btn-light" onclick="location.href='{% url 'request_meeting' %}'">
+                <i class="fas fa-calendar-alt me-2"></i>Agendar Reunião
+            </button>
+            
+            {% if user.is_superuser %}
+                <button type="button" class="btn btn-light" onclick="location.href='{% url 'manage_meetings' %}'">
+                    <i class="fas fa-calendar-check me-2"></i>Reuniões
+                </button>
+                
+                <button type="button" class="btn btn-light" onclick="location.href='{% url 'relatorio' %}'">
+                    <i class="fas fa-chart-line me-2"></i>Relatórios
+                </button>
             {% endif %}
+            
+            {% if perms.contas.view_myuser %}
+                <button type="button" class="btn btn-light" onclick="location.href='{% url 'user_credits' %}'">
+                    <i class="fas fa-wallet me-2"></i>Usuários Créditos
+                </button>
+            
+                <button type="button" class="btn btn-light" onclick="location.href='{% url 'lista_usuarios' %}'">
+                    <i class="fas fa-users me-2"></i>Usuários do Sistema
+                </button>
+            {% endif %}
+                                
                         
             <button type="button" class="btn btn-light" onclick="location.href='{% url 'configuracao' %}'">
                 <i class="fas fa-cog me-2"></i>Configurações</button>

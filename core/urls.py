@@ -24,7 +24,9 @@ urlpatterns = [
     path('contas/', include('contas.urls')),
     path('perfil/', include('perfil.urls')),
     path('config/', include('config.urls')),
-    path('forum/', include('forum.urls')),
+    path('noticias/', include('forum.urls')),
+    path('ong/', include('creditONG.urls')),
+    path('reuniao/', include('reuniao.urls')),
     path('', include('pages.urls')),
 ]
 

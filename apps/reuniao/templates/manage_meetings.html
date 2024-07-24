@@ -1,0 +1,33 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Dashboard - Gerenciar Reuniões{% endblock %}
+{% block content_dash %}
+<div class="p-3"> 
+  <h1>Solicitações de Reuniões</h1>
+    <!-- table -->
+    <div class="table-responsive">
+        <table class="table table-light">
+            <thead class="table-light">
+                <tr> 
+                  <th scope="col">Usuário</th>
+                  <th scope="col">Assunto</th>
+                  <th scope="col">Descrição</th>
+                  <th scope="col">Data da Solicitação</th>
+                  <th scope="col">Status</th> 
+                </tr>
+            </thead> 
+            {% for request in page_obj %}
+            <tr>
+                <td>{{ request.user.username }}</td>
+                <td>{{ request.subject }}</td>
+                <td>{{ request.description }}</td>
+                <td>{{ request.requested_at }}</td>
+                <td>{{ request.status }}</td>
+            </tr> 
+            {% empty %}
+            <p>Nenhuma poste cadastrado.</p>
+            {% endfor %}
+        </table>
+    </div>
+    {% include 'components/paginacao.html' %}
+</div>
+{% endblock %} 

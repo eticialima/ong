@@ -4,7 +4,9 @@
 {% block content %}
 
   {% for bloco in blocos %}
+    {% include "components/search.html" %}
     {% include "components/slide.html" %}
+    {% include "components/posts-recents.html" %} 
     {% include "components/banner.html" %}
     {% include "components/cards.html" %} 
     {% include "components/faq.html" %} 

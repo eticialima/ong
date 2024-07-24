@@ -1,0 +1,24 @@
+{% load static %}
+<!-- SIDEBAR -->
+<!-- Sidebar lateral esquerda padrão --> 
+<form class="form-inline d-flex gap-2" method="GET" action="{% url 'search_filters' %}">
+    <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar..." name="search" value="{{ request.GET.titulo }}" id="titulo">
+    <button type="submit" class="btn btn-outline-success my-2 my-sm-0"><i class="fas fa-search"></i></button>
+</form>  
+<div class="card mt-4">
+    <h2>Melhores Aleatórios</h2> 
+    {% for post in post_must %} 
+    {% if forloop.counter <= 5 %} 
+    <div class="d-flex gap-3 mb-3">
+        <a href="{% url 'detalhe-postagem-forum' post.slug %}" class="flex-shrink-0">
+            <img src="{% if post.anexar_imagem %}{{post.anexar_imagem.url}}{% else %}{% static 'images/default-image.jpg' %}{% endif %}" class="img-fluid" alt="{{post.id}}" style="width: 100px; height: auto;">
+        </a>
+        <div class="ml-3">
+            <p class="mb-1"><a href="{% url 'detalhe-postagem-forum' post.slug %}">{{post.titulo}}</a></p>
+            <span class="text-muted">{{ post.data_publicacao }}</span>
+        </div> 
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>  
+{% include "components/category.html" %}  

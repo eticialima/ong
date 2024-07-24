@@ -1,48 +1,108 @@
-{% if bloco.bloco.nome == 'CARDS' %}
-<section>
-    <div class="container py-lg-5">
-        <div class="row justify-content-center pb-5">
-            <div class="col-md-12 text-center">
-                <h2 class="mb-3">{{bloco.titulo}}</h2>
-                <p>{{bloco.descricao|default:""}}</p>
-            </div>
-        </div>
-        <div class="row g-4">
-            {% for card in bloco.conteudo.all %} 
-            <div class="col-md-6 d-flex align-self-stretch">
-                <div class="d-flex gap-4">
-                    <div class="rounded text-white p-5" style="background-color: {{card.cor_label}}">
-                        <i class="{{card.icone}}"></i>
-                    </div>
-                    <div class="media-body pl-md-4">
-                        <h3 class="text-dark text-decoration-none mb-3">{{card.titulo_1}}</h3>
-                        <p>{{card.descricao_1}}</p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %} 
+{% load static %}
+{% if bloco.bloco.nome == 'CARDS' %} 
+<div class="container py-lg-5">
+    <div class="row justify-content-center pb-5">
+        <div class="col-md-12 text-center">
+            <h2 class="mb-3">{{bloco.titulo}}</h2>
+            <p>{{bloco.descricao|default:""}}</p>
         </div>
     </div>
-</section>
-{% endif %}
-
-{% if bloco.bloco.nome == 'CARDS_2' %}
-<section>
-    <div class="container text-center py-lg-5">
-        <div class="row justify-content-center pb-5">
-            <div class="col-md-12">
-                <h2 class="mb-3">{{bloco.titulo}}</h2>
+    <div class="row g-4">
+        {% for card in bloco.conteudo.all %} 
+        <div class="col-md-6 d-flex align-self-stretch">
+            <div class="d-flex gap-4">
+                <div class="rounded text-white p-5" style="background-color: {{card.cor_label}}">
+                    <i class="{{card.icone}}"></i>
+                </div>
+                <div class="media-body pl-md-4">
+                    <h3 class="text-dark text-decoration-none mb-3">{{card.titulo_1}}</h3>
+                    <p>{{card.descricao_1}}</p>
+                </div>
             </div>
         </div>
-        <div class="row gap-3">
-            {% for especialidade in bloco.conteudo.all %} 
-            <div class="col p-4 bg-light rounded-5">
-                <img src="{{especialidade.imagem.url}}" class="rounded-circle object-fit-cover" width="150" height="150" alt="">
-                <h3><a class="link-dark text-decoration-none" href="#">{{especialidade.titulo_1}}</a></h3>
-                <p>{{especialidade.descricao_1}}</p>
+        {% endfor %} 
+    </div>
+</div> 
+{% endif %}
+{% if bloco.bloco.nome == 'CARDS_2' %} 
+<div class="container text-center py-lg-5">
+    <div class="row justify-content-center pb-5">
+        <div class="col-md-12">
+            <h2 class="mb-3">{{bloco.titulo}}</h2>
+            <p>{{bloco.descricao}}</p>
+        </div>
+    </div>
+    <div class="row gap-3">
+        {% for con in bloco.conteudo.all %} 
+        <div class="col p-4 bg-light rounded-5">
+            <img src="{% if con.imagem %}{{ con.imagem.url }}{% else %}{% static 'images/default-image.jpg' %}{% endif %}" class="rounded-circle object-fit-cover" width="150" height="150" alt="">
+            <h3><a class="link-dark text-decoration-none" href="#">{{con.titulo_1}}</a></h3>
+            <p>{{con.descricao_1|default:""}}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div> 
+{% endif %}
+{% if bloco.bloco.nome == 'CARD_3' %}
+<div class="container py-lg-5">
+    {% if bloco.posts.all %}
+    <div class="cards">
+        <div class="card-left">
+            {% for post in bloco.posts.all|slice:":3" %}
+            <div class="card"> 
+                <div class="card-content">
+                    <div class="card-description">
+                        <h3><a href="{% url 'detalhe-postagem-forum' post.slug %}">{{post.titulo}}</a></h3> 
+                        <i class="fas fa-chevron-right fa-2x"></i>  
+                    </div> 
+                    <p>{{ post.data_criacao }}</p>
+                </div>  
+                <div class="card-image-gradient">
+                    <img src="{% if post.anexar_imagem %}{{ post.anexar_imagem.url }}{% else %}{% static 'images/default-image.jpg' %}{% endif %}" alt="{{ post.titulo }}">
+                </div>
             </div>
             {% endfor %}
         </div>
-    </div>
-</section>
+        <div class="card-right">
+            {% for post in bloco.posts.all|slice:"3:5" %}
+            <div class="card"> 
+                <div class="card-content">
+                    <div class="card-description">
+                        <h3><a href="{% url 'detalhe-postagem-forum' post.slug %}">{{post.titulo}}</a></h3> 
+                        <i class="fas fa-chevron-right fa-2x"></i>  
+                    </div> 
+                    <p>{{ post.data_criacao }}</p>
+                </div>  
+                <div class="card-image-gradient">
+                    <img src="{% if post.anexar_imagem %}{{ post.anexar_imagem.url }}{% else %}{% static 'images/default-image.jpg' %}{% endif %}" alt="{{ post.titulo }}">
+                </div>
+            </div>
+            {% endfor %} 
+        </div> 
+    </div> 
+    {% endif %} 
+</div> 
 {% endif %}
+{% if bloco.bloco.nome == 'CARD_4' %} 
+<div class="container py-lg-5 swiper">
+    <h2 class="header">{{bloco.titulo}}</h2> 
+    <div class="slide-container"> 
+      <div class="card-wrapper swiper-wrapper"> 
+        {% for post in bloco.posts.all %}
+        <div class="card swiper-slide">
+            <div class="card-image">
+                <img src="{% if post.anexar_imagem %}{{ post.anexar_imagem.url }}{% else %}{% static 'images/default-image.jpg' %}{% endif %}" alt="{{ post.titulo }}">
+            </div>
+            <div class="card-body">  
+                <p class="card-title">{{post.titulo}}</p>
+                <span class="text-muted">{{ post.data_criacao }}</span> 
+            </div>
+        </div>  
+        {% endfor %}
+      </div>
+    </div>
+    <div class="swiper-button-next swiper-navBtn"></div>
+    <div class="swiper-button-prev swiper-navBtn"></div>
+    <div class="swiper-pagination"></div>
+</div>
+{% endif %}  

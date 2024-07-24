@@ -7,8 +7,42 @@ from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.conf import settings
 
+from forum.managers import PostagemForumManager
+
 user = get_user_model()
 
+class Category(models.Model):
+    name = models.CharField('Título', max_length=60)
+    description = models.TextField('Descrição', blank=True, null=True)
+    slug = models.SlugField('URL única', unique=True, null=True, blank=True, 
+                            help_text='Preenchido automaticamente.')
+    created_at = models.DateTimeField('Criado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now=True)
+
+    class Meta:
+        verbose_name = 'Categoria'
+        verbose_name_plural = 'Categorias'
+
+    def __str__(self) -> str:
+        return self.name
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug_base = slugify(self.name)
+            self.slug = slug_base
+        super(Category, self).save(*args, **kwargs)
+        
+class Tag(models.Model):
+    name = models.CharField(max_length=100) 
+    
+    class Meta:
+        verbose_name = 'Tag'
+        verbose_name_plural = 'Tags'
+
+    def __str__(self) -> str:
+        return self.name 
+    
+       
 # Create your models here.
 class PostagemForum(models.Model):
     usuario = models.ForeignKey(user, related_name="user_postagem_forum", 
@@ -22,6 +56,12 @@ class PostagemForum(models.Model):
                                       blank=True, null=True)
     
     slug = models.SlugField(unique=True, null=True,blank=True)
+    
+    categories = models.ManyToManyField(Category, related_name="category_posts", blank=True) 
+    
+    tags = models.ManyToManyField(Tag, related_name="tag_posts", blank=True)
+
+    objects = PostagemForumManager()
     
     def __str__(self):
         return "{} ({})".format(self.titulo, self.data_publicacao)

@@ -1,0 +1,30 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Dashboard - Lista de Itens para Compra{% endblock %}
+{% block content_dash %} 
+    <h1>Lista de Itens para Compra</h1>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        {% for item in page_obj %}
+
+        <div class="col">
+            <div class="card"> 
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text">{{ item.price }}</p>
+                    <form action="{% url 'purchase_item' item.id %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-warning" type="submit">Comprar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {% empty %}
+        <p>Nenhuma poste cadastrado.</p>
+        {% endfor %}
+        < </div>
+            {% include 'components/paginacao.html' %}
+    </div>
+ 
+{% endblock %}

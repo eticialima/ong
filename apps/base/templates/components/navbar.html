@@ -11,10 +11,13 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'lista-postagem-forum' %}">Forum (QA)</a>
+                    <a class="nav-link" href="{% url 'lista-postagem-forum' %}">Notícias</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'sobre' %}">Sobre</a>
+                    <a class="nav-link" href="{% url 'beneficios' %}">Benefícios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sobre' %}">Sobre nos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'faq' %}">FAQ</a>
@@ -29,8 +32,8 @@
                 <button class="btn btn-success" type="submit">Pesquisar</button>
             </form>
             {% if user.is_authenticated %}
-            <button class="btn btn-success mx-2" onclick="location.href='{% url 'criar-postagem-forum' %}'">
-                <i class="fas fa-plus"></i> Criar Postagem</button>
+            <!-- <button class="btn btn-success mx-2" onclick="location.href='{% url 'criar-postagem-forum' %}'">
+                <i class="fas fa-plus"></i> Criar Postagem</button> -->
             <button class="btn btn-warning mx-2" type="submit"  onclick="location.href='{% url 'painel' %}'">
                 <i class="fas fa-cog"></i></button>
             <span class="p-2">

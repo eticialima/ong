@@ -82,6 +82,8 @@ PROJECT_APPS = [
     'apps.perfil',
     'apps.pages',
     'apps.forum',
+    'apps.creditONG',
+    'apps.reuniao'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + PROJECT_APPS
@@ -119,6 +121,8 @@ TEMPLATES = [
                 'base.context_processors.get_seo',
                 'base.context_processors.get_ga_code', 
                 'base.context_processors.get_scripts', 
+                'base.context_processors.get_posts', 
+                'base.context_processors.get_user_balance',  
             ], 
         },
     },

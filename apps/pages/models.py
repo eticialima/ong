@@ -1,4 +1,5 @@
-from django.db import models
+from django.db import models 
+from forum.models import PostagemForum
  
  
 class Pagina(models.Model): 
@@ -67,7 +68,8 @@ class Blocos(models.Model):
     descricao = models.TextField(blank=True, null=True, help_text="Descrição do bloco")
     pagina = models.ForeignKey(Pagina, on_delete=models.CASCADE, related_name="pagina_conteudo") # Aonde será exibido esse bloco
     bloco = models.ForeignKey(TipoBloco, on_delete=models.CASCADE, related_name="bloco_conteudo", null=True) # Tipo de Bloco, SLIDE, BANNER_1, BANNER_2
-    conteudo = models.ManyToManyField(Conteudo)
+    conteudo = models.ManyToManyField(Conteudo, blank=True)
+    posts = models.ManyToManyField(PostagemForum, blank=True)
     ativo = models.BooleanField(default=True)
     
     class Meta:
